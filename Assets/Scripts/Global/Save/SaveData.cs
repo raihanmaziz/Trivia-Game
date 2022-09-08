@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TriviaGame.Global.Currency;
 using UnityEngine;
 
 namespace TriviaGame.Global.Save
@@ -46,6 +48,10 @@ namespace TriviaGame.Global.Save
             {
                 string json = PlayerPrefs.GetString(_prefsKey);
                 JsonUtility.FromJsonOverwrite(json, this);
+                if(_unlockedPack.Length == 0)
+                {
+                    UpdateUnlockedPack("PackA");
+                }
             }
             else
             {
@@ -61,16 +67,19 @@ namespace TriviaGame.Global.Save
 
         public void UpdateSelectedPack(string packID)
         {
-            _selectedLevel = packID;
+            _selectedPack = packID;
         }
 
         public void UpdateUnlockedPack(string packID)
         {
-            string[] tempUnlocked = _unlockedPack;
-            int newLength = tempUnlocked.Length + 1;
-            _unlockedPack = new string[newLength];
-            _unlockedPack = tempUnlocked;
-            _unlockedPack[newLength - 1] = packID;
+            List<string> tempUnlock = new List<string>();
+            for (int i = 0; i < _unlockedPack.Length; i++)
+            {
+                tempUnlock.Add(_unlockedPack[i]);
+            }
+            tempUnlock.Add(packID);
+            _unlockedPack = tempUnlock.ToArray();
+            Save();
         }
     }
 }

@@ -59,6 +59,7 @@ namespace TriviaGame.Pack.PackData
                         tempPacks[i].isUnlocked = true;
                     }
                 }
+                tempPacks[i].unlockCost = 100;
             }
             return tempPacks;
         }

@@ -42,12 +42,7 @@ namespace TriviaGame.Global.Database
                     listPack.Add(_levels[i].packID);
                 }
             }
-            string[] tempListPack = new string[listPack.Count];
-            for (int i = 0; i < tempListPack.Length; i++)
-            {
-                tempListPack[i] = listPack[i];
-            }
-            return tempListPack;
+            return listPack.ToArray();
         }
 
         public string[] GetLevelList(string packID)
@@ -60,13 +55,7 @@ namespace TriviaGame.Global.Database
                     listLevel.Add(_levels[i].levelID);
                 }
             }
-            string[] tempList = new string[listLevel.Count];
-            for (int i = 0; i < tempList.Length; i++)
-            {
-                tempList[i] = listLevel[i];
-            }
-            Debug.Log(tempList);
-            return tempList;
+            return listLevel.ToArray();
         }
 
         public LevelStruct GetLevelData(string LevelID)

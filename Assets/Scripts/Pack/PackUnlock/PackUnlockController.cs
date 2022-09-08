@@ -1,3 +1,4 @@
+using TriviaGame.Global;
 using TriviaGame.Global.Currency;
 using TriviaGame.Global.Save;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace TriviaGame.Pack.PackUnlock
             if (_currency.SpendCoin(100))
             {
                 _saveData.UpdateUnlockedPack(packID);
+                EventManager.TriggerEvent("UnlockPack", packID);
             }
             else
             {

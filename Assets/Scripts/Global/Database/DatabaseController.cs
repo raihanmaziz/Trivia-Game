@@ -9,7 +9,7 @@ namespace TriviaGame.Global.Database
 
         [SerializeField] private LevelStruct[] _levels;
 
-        public LevelStruct[] levels => levels;
+        public LevelStruct[] levels => _levels;
 
         private void Awake()
         {

@@ -20,6 +20,8 @@ namespace TriviaGame.Global.Save
         public string[] unlockedPack => _unlockedPack;
         public string[] completedPack => _completedPack;
         public string[] completedLevel => _completedLevel;
+        public string selectedPack => _selectedPack;
+        public string selectedLevel => _selectedLevel;
 
         private void Awake()
         {
@@ -80,6 +82,11 @@ namespace TriviaGame.Global.Save
             tempUnlock.Add(packID);
             _unlockedPack = tempUnlock.ToArray();
             Save();
+        }
+
+        public void UpdateSelectedLevel(string levelID)
+        {
+            _selectedLevel = levelID;
         }
     }
 }

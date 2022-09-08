@@ -11,6 +11,8 @@ namespace TriviaGame.Global.Save
         [SerializeField] private string[] _unlockedPack;
         [SerializeField] private string[] _completedPack;
         [SerializeField] private string[] _completedLevel;
+        private string _selectedPack;
+        private string _selectedLevel;
 
         public int coin => _coin;
         public string[] unlockedPack => _unlockedPack;
@@ -55,6 +57,20 @@ namespace TriviaGame.Global.Save
         {
             _coin = coin;
             Save();
+        }
+
+        public void UpdateSelectedPack(string packID)
+        {
+            _selectedLevel = packID;
+        }
+
+        public void UpdateUnlockedPack(string packID)
+        {
+            string[] tempUnlocked = _unlockedPack;
+            int newLength = tempUnlocked.Length + 1;
+            _unlockedPack = new string[newLength];
+            _unlockedPack = tempUnlocked;
+            _unlockedPack[newLength - 1] = packID;
         }
     }
 }

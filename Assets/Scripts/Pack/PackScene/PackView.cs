@@ -33,6 +33,12 @@ namespace TriviaGame.Pack.PackScene
         {
             SceneManager.LoadScene("Home");
         }
+
+        public void SelectPack(string packID)
+        {
+            _saveData.UpdateSelectedPack(packID);
+            SceneManager.LoadScene("Level");
+        }
     }
 }
 

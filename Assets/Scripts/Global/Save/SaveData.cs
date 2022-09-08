@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TriviaGame.Global.Currency;
+using TriviaGame.Global.Database;
 using UnityEngine;
 
 namespace TriviaGame.Global.Save
@@ -15,6 +16,7 @@ namespace TriviaGame.Global.Save
         [SerializeField] private string[] _completedLevel;
         private string _selectedPack;
         private string _selectedLevel;
+        private DatabaseController _database;
 
         public int coin => _coin;
         public string[] unlockedPack => _unlockedPack;
@@ -39,6 +41,11 @@ namespace TriviaGame.Global.Save
             {
                 UpdateUnlockedPack("PackA");
             }
+        }
+
+        private void Start()
+        {
+            _database = DatabaseController.databaseInstance;
         }
 
         private void Save()
@@ -98,6 +105,42 @@ namespace TriviaGame.Global.Save
             }
             tempCompletedLevel.Add(levelID);
             _completedLevel = tempCompletedLevel.ToArray();
+            string[] listLevelOnPack = _database.GetLevelList(_selectedPack);
+            bool isAllLevelOnPackCompleted = true;
+            bool[] isLevelCompleted = new bool[listLevelOnPack.Length];
+            for (int i = 0; i < listLevelOnPack.Length; i++)
+            {
+                for (int j = 0; j < _completedLevel.Length; j++)
+                {
+                    if (listLevelOnPack[i] == _completedLevel[j])
+                    {
+                        isLevelCompleted[i] = true;
+                    }
+                }
+            }
+            for (int i = 0; i < isLevelCompleted.Length; i++)
+            {
+                if(!isLevelCompleted[i])
+                {
+                    isAllLevelOnPackCompleted = false;
+                }
+            }
+            if(isAllLevelOnPackCompleted)
+            {
+                UpdateCompletedPack(_selectedPack);
+            }
+            Save();
+        }
+
+        public void UpdateCompletedPack(string packID)
+        {
+            List<string> tempCompletedPack = new List<string>();
+            for (int i = 0; i < _completedPack.Length; i++)
+            {
+                tempCompletedPack.Add(_completedPack[i]);
+            }
+            tempCompletedPack.Add(packID);
+            _completedPack = tempCompletedPack.ToArray();
             Save();
         }
     }

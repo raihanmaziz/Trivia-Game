@@ -10,6 +10,7 @@ namespace TriviaGame.Global.Currency
         private SaveData _saveData;
 
         private int _coin;
+        private int _coinIncrement = 20;
 
         private void Awake()
         {
@@ -27,7 +28,17 @@ namespace TriviaGame.Global.Currency
         private void Start()
         {
             _saveData = SaveData.saveInstance;
-            GetCoin();
+            _coin = GetCoin();
+        }
+
+        private void OnEnable()
+        {
+            EventManager.StartListening("FinishLevel", AddCurrency);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.StopListening("FinishLevel", AddCurrency);
         }
 
         public int GetCoin()
@@ -53,6 +64,20 @@ namespace TriviaGame.Global.Currency
                 _saveData.UpdateCoin(_coin);
                 return true;
             }
+        }
+
+        private void AddCurrency(object data)
+        {
+            string levelID = (string)data;
+            for (int i = 0; i < _saveData.completedLevel.Length; i++)
+            {
+                if(levelID == _saveData.completedLevel[i])
+                {
+                    return;
+                }
+            }
+            _saveData.UpdateCompletedLevel(levelID);
+            AddCoin(_coinIncrement);
         }
     }
 }

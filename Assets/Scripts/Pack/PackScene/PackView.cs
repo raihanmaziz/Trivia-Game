@@ -36,8 +36,14 @@ namespace TriviaGame.Pack.PackScene
 
         public void SelectPack(string packID)
         {
-            _saveData.UpdateSelectedPack(packID);
-            SceneManager.LoadScene("Level");
+            for (int i = 0; i < _saveData.unlockedPack.Length; i++)
+            {
+                if (packID == _saveData.unlockedPack[i])
+                {
+                    _saveData.UpdateSelectedPack(packID);
+                    SceneManager.LoadScene("Level");
+                }
+            }
         }
     }
 }

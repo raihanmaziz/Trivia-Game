@@ -35,6 +35,10 @@ namespace TriviaGame.Global.Save
                 Destroy(gameObject);
             }
             Load();
+            if (_unlockedPack.Length == 0)
+            {
+                UpdateUnlockedPack("PackA");
+            }
         }
 
         private void Save()
@@ -50,10 +54,6 @@ namespace TriviaGame.Global.Save
             {
                 string json = PlayerPrefs.GetString(_prefsKey);
                 JsonUtility.FromJsonOverwrite(json, this);
-                if(_unlockedPack.Length == 0)
-                {
-                    UpdateUnlockedPack("PackA");
-                }
             }
             else
             {
@@ -87,6 +87,18 @@ namespace TriviaGame.Global.Save
         public void UpdateSelectedLevel(string levelID)
         {
             _selectedLevel = levelID;
+        }
+
+        public void UpdateCompletedLevel(string levelID)
+        {
+            List<string> tempCompletedLevel = new List<string>();
+            for (int i = 0; i < _completedLevel.Length; i++)
+            {
+                tempCompletedLevel.Add(_completedLevel[i]);
+            }
+            tempCompletedLevel.Add(levelID);
+            _completedLevel = tempCompletedLevel.ToArray();
+            Save();
         }
     }
 }

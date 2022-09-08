@@ -50,6 +50,12 @@ namespace TriviaGame.Global.Save
                 Save();
             }
         }
+
+        public void UpdateCoin(int coin)
+        {
+            _coin = coin;
+            Save();
+        }
     }
 }
 

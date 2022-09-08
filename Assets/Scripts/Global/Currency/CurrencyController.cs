@@ -5,9 +5,24 @@ namespace TriviaGame.Global.Currency
 {
     public class CurrencyController : MonoBehaviour
     {
+        public static CurrencyController currencyInstance;
+
         private SaveData _saveData;
 
         private int _coin;
+
+        private void Awake()
+        {
+            if (currencyInstance == null)
+            {
+                currencyInstance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {

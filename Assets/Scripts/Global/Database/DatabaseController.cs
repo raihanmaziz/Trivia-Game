@@ -26,16 +26,28 @@ namespace TriviaGame.Global.Database
 
         public string[] GetPackList()
         {
-            string[] listPack = new string[_levels.Length];
+            List<string> listPack = new List<string>();
             for (int i = 0; i < _levels.Length; i++)
             {
                 bool isCopy = false;
-                for (int j = 0; j < listPack.Length; j++)
+                for (int j = 0; j < listPack.Count; j++)
                 {
-
+                    if (_levels[i].packID == listPack[j])
+                    {
+                        isCopy = true;
+                    }
+                }
+                if (!isCopy)
+                {
+                    listPack.Add(_levels[i].packID);
                 }
             }
-            return listPack;
+            string[] tempListPack = new string[listPack.Count];
+            for (int i = 0; i < tempListPack.Length; i++)
+            {
+                tempListPack[i] = listPack[i];
+            }
+            return tempListPack;
         }
 
         public string[] GetLevelList(string packID)
